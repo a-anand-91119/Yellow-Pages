@@ -29,7 +29,7 @@ public class SpringWebConfiguration implements WebMvcConfigurer{
 	}
 	
 	@Bean
-	private ViewResolver viewResolver() {
+	public ViewResolver viewResolver() {
 		InternalResourceViewResolver internalResourceViewResolver = new InternalResourceViewResolver();
 		internalResourceViewResolver.setViewClass(JstlView.class);
 		internalResourceViewResolver.setPrefix(Constants.WEB_RESOURCE_PREFIX);
