@@ -1,6 +1,7 @@
 package com.anand.yellowpages.dao;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.anand.yellowpages.configuration.SpringRootConfiguration;
@@ -21,5 +22,7 @@ public class TestDAOFindById {
 		User user = (User) dao.findById(new Long("2"));
 		System.out.println(user);
 		System.out.println("-------User Fetched--------");
+		
+		((ConfigurableApplicationContext)applicationContext).close();
 	}
 }
