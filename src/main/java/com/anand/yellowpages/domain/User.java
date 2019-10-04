@@ -7,7 +7,7 @@ package com.anand.yellowpages.domain;
  *
  */
 public class User {
-	
+
 	private Long userId;
 	private String userName;
 	private String userPhoneNumber;
@@ -92,6 +92,14 @@ public class User {
 
 	public void setUserLoginStatus(String userLoginStatus) {
 		this.userLoginStatus = userLoginStatus;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", userName=" + userName + ", userPhoneNumber=" + userPhoneNumber
+				+ ", userEmailAddress=" + userEmailAddress + ", userAddress=" + userAddress + ", userLoginName="
+				+ userLoginName + ", userPassword=" + userPassword + ", userRole=" + userRole + ", userLoginStatus="
+				+ userLoginStatus + "]";
 	}
 
 }
