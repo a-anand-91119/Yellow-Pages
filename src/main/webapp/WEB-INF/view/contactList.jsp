@@ -6,10 +6,9 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Yellow Pages - User Registration</title>
+	<title>Yellow Pages - Contact List</title>
 	
 	<spring:url var = "urlImage" value ="/resources/images/img-01.png"/>
-	<spring:url var = "urlRegister" value ="/register"/>
 	
 	<spring:url var = "urlFavicon" value ="/resources/images/icons/favicon.ico"/>
 	<spring:url var = "urlBootstrap" value ="/resources/vendor/bootstrap/css/bootstrap.min.css"/>
@@ -44,85 +43,57 @@
 <body>
 	<div class="limiter">
 		<div class="container-login100">
-			<div class="wrap-login100">
+			<div class="wrap-login100" style = "width: 60%; ">
 			<!-- MENU BAR -->
 			<jsp:include page="include/menu.jsp"/>
 			<!-- MENU BAR -->
-			
-			<!-- BODY -->
-				<div class="login100-pic js-tilt" data-tilt>     
-					 <img src="${urlImage}" alt="IMG">
-				</div>
-
-				<form:form class="login100-form validate-form" action="${urlRegister}" modelAttribute="registrationCommand">
-					<span class="login100-form-title">
-						User Registration
-					</span>
-					<spring:if test="${errorMessage != null}">
+			<spring:if test="${param.action eq 'save'}">
 						<script>
-							Swal.fire({
+						Swal.fire({
+							  type: 'success',
+							  title: 'Contact Created Successfully!',
+							  showConfirmButton: true,
+							  footer: 'You Can See The New Contact In Contact List'
+							})
+						</script>
+			</spring:if>
+			
+			<spring:if test="${param.action eq 'delete'}">
+						<script>
+						Swal.fire({
+							  type: 'success',
+							  title: 'Contact Deleted Successfully!',
+							  showConfirmButton: true,
+							  footer: 'You Can See The Updated List The In Contact List'
+							})
+						</script>
+			</spring:if>
+			
+			
+			<spring:if test="${empty contactList}">
+						<script>
+						Swal.fire({
 							  type: 'error',
-							  title: 'Oops... Registration Failed',
-							  text: '${errorMessage}',
+							  title: 'Oops... No Contacts Found',
+							  text: 'Please Create A Contact Before You Can See Them',
 							  footer: '<a href>Why do I have this issue?</a>'
 							});
 						</script>
-					</spring:if>
-					
-					<div class="wrap-input100 validate-input" data-validate = "Login Username is required">
-						<form:input class="input100" type="text" name="text" placeholder="Username" path="user.userLoginName"/>
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-user" aria-hidden="true"></i>
-						</span>
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<form:password class="input100" name="pass" placeholder="Password" path="user.userPassword"/>
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-lock" aria-hidden="true"></i>
-						</span>
-					</div>
-					
-					<div class="wrap-input100 validate-input" data-validate = "Full Name is required">
-						<form:input class="input100" type="text" name="text" placeholder="Name" path="user.userName"/>
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-user" aria-hidden="true"></i>
-						</span>
-					</div>
-					
-					<div class="wrap-input100 validate-input" data-validate = "Phone Number is required">
-						<form:input class="input100" type="text" name="text" placeholder="Phone Number" path="user.userPhoneNumber"/>
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-phone" aria-hidden="true"></i>
-						</span>
-					</div>
-					
-					<div class="wrap-input100 validate-input" data-validate = "Enter Valid Email Address (asd@asd.com)">
-						<form:input class="input100" type="text" name="text" placeholder="Email Address" path="user.userEmailAddress"/>
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
-					</div>
-					
-					<div class="wrap-input100 validate-input" data-validate = "Address is required">
-						<form:textarea class="input100" type="text" name="text" placeholder="Address" path="user.userAddress"/>
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-address-card " aria-hidden="true"></i>
-						</span>
-					</div>
-					
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Submit
-						</button>
-					</div>
-				</form:form>
+			</spring:if>
+			<!-- BODY -->
+				<span class="login100-form-title" style = "padding-bottom: 30px;">
+						All Contacts
+				</span>
+				<div class="login100-pic js-tilt" data-tilt style = "width: 30%;">     
+					 <img src="${urlImage}" alt="IMG">
+				</div>
+				
+				<div class="scrollabletable">
+					<spring:forEach items="${contactList}" var = "contact" varStatus = "contactData">
+						<%@ include file="cards/card.jsp"%>
+					<%-- 	<jsp:include page="cards/card.jsp"/> --%>
+					</spring:forEach>
+				</div>
 				
 			<!-- BODY -->
 				

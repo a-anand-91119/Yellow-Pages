@@ -3,6 +3,7 @@ package com.anand.yellowpages.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -81,12 +82,20 @@ public class YellowPagesController {
 	}
 	
 	@RequestMapping(value = Constants.URL_REGISTER_USER)
-	public String registerUser(@ModelAttribute("registrationCommand") RegistrationCommand registrationCommand) {
-		User user = registrationCommand.getUser();
-		user.setUserRole(ServiceConstants.ROLE_USER);
-		user.setUserLoginStatus(ServiceConstants.LOGIN_STATUS_ACTIVE);
-		userService.register(user);
-		return "redirect:index?action=register"; // -> /WEB-INF/view/index.jsp
+	public String registerUser(@ModelAttribute("registrationCommand") RegistrationCommand registrationCommand, Model model) {
+		try {
+			User user = registrationCommand.getUser();
+			if(user != null) {
+				user.setUserRole(ServiceConstants.ROLE_USER);
+				user.setUserLoginStatus(ServiceConstants.LOGIN_STATUS_ACTIVE);
+				userService.register(user);
+				return "redirect:index?action=register"; // -> /WEB-INF/view/index.jsp
+			}
+			return "registration"; // -> /WEB-INF/view/registration.jsp
+		} catch (DuplicateKeyException e) {
+			model.addAttribute("errorMessage", "Username is already taken.");
+			return "registration"; // -> /WEB-INF/view/registration.jsp
+		}
 	}
 	
 	/**

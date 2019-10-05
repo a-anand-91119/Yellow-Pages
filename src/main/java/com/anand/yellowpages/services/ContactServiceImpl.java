@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.anand.yellowpages.dao.BaseDAO;
 import com.anand.yellowpages.dao.DAO;
@@ -13,6 +14,7 @@ import com.anand.yellowpages.domain.Contact;
 import com.anand.yellowpages.rowmappers.ContactRowMapper;
 
 @SuppressWarnings("unchecked")
+@Service
 public class ContactServiceImpl extends BaseDAO implements ContactService{
 
 	@Autowired

@@ -37,16 +37,8 @@
 <body>
 	<div class="limiter">
 		<div class="container-login100">
-			<!-- <div class="wrap-logintest purple">
-				<div class="menubar topBotomBordersIn">
-				  <a>HOME</a>
-				  <a>ARTICLES</a>
-				  <a>PORTFOLIO</a>
-				  <a>ABOUT</a>
-				  <a>CONTACT</a>
-				</div>
-			</div> -->
 			<div class="wrap-login100">
+
 			<!-- MENU BAR -->
 			<jsp:include page="include/menu.jsp"/>
 			<!-- MENU BAR -->

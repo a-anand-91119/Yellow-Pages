@@ -3,13 +3,20 @@
 
 <spring:url var = "urlLogout" value ="/logout"/>
 <spring:url var = "urlRegister" value ="/registration"/>
+<spring:url var = "urlHome" value = "/"/>
+
+<spring:url var = "urlUserAddContact" value ="/user/contactForm"/>
+<spring:url var = "urlUserHome" value ="/user/dashboard"/>
+<spring:url var = "urlUserContactList" value ="/user/contactList"/>
+
+<spring:url var = "urlAdminHome" value ="/admin/dashboard"/>
 
 <spring:if test="${sessionScope.loggedInUserId==null}">
 	<!-- User Not Yet Logged In : Guest Menu-->
 	<div class="wrap-logintest">
 		<div class="menubar topBotomBordersIn">
-		  <a href = "#" >HOME</a>
-		  <a href = "#" >LOGIN</a>
+		  <a href = "${urlHome}" >HOME</a>
+		  <a href = "${urlHome}" >LOGIN</a>
 		  <a href = "${urlRegister}" >REGISTER</a>
 		  <a href = "#" >ABOUT</a>
 		  <a href = "#" >HELP</a>
@@ -21,7 +28,7 @@
 	<!-- Admin User Logged In : Admin Menu -->
 	<div class="wrap-logintest">
 		<div class="menubar topBotomBordersIn">
-		  <a href = "#" >HOME</a>
+		  <a href = "${urlAdminHome}" >HOME</a>
 		  <a href = "#" >USER LIST</a>
 		  <a href = "${urlLogout}" >LOGOUT</a>
 		</div>
@@ -30,11 +37,11 @@
 
 <spring:if test="${sessionScope.loggedInUserId != null && sessionScope.loggedInUserRole == 2}">
 	<!-- General User Logged In : User Menu -->
-	<div class="wrap-logintest">
+	<div class="wrap-logintest" style = "margin: 0px 0px 75px 0px; height: 90px;">
 		<div class="menubar topBotomBordersIn">
-		  <a href = "#" >HOME</a>
-		  <a href = "#" >ADD CONTACT</a>
-		  <a href = "#" >CONTACT LIST</a>
+		  <a href = "${urlUserHome}" >HOME</a>
+		  <a href = "${urlUserAddContact}" >ADD CONTACT</a>
+		  <a href = "${urlUserContactList}" >CONTACT LIST</a>
 		  <a href = "${urlLogout}" >LOGOUT</a>
 		</div>
 	</div>

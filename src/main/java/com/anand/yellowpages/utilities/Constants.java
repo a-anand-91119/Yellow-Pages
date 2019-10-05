@@ -19,6 +19,12 @@ public class Constants {
 	public static final String URL_LOGOUT = "/logout";
 	public static final String URL_REGISTER = "/registration";
 	public static final String URL_REGISTER_USER = "/register";
+	public static final String URL_CONTACT_FORM = "/user/contactForm";
+	public static final String URL_CONTACT_SAVE = "/user/saveContact";
+	public static final String URL_CONTACT_LIST = "/user/contactList";
+	public static final String URL_CONTACT_EDIT = "/user/editContact";
+	public static final String URL_CONTACT_DELETE = "/user/deleteContact";
+
 	
 	public static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 	public static final String DB_URL = "jdbc:mysql://localhost:3306/yellow_pages";
