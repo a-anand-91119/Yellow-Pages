@@ -24,6 +24,7 @@ public class Constants {
 	public static final String URL_CONTACT_LIST = "/user/contactList";
 	public static final String URL_CONTACT_EDIT = "/user/editContact";
 	public static final String URL_CONTACT_DELETE = "/user/deleteContact";
+	public static final String URL_CONTACT_SEARCH = "/user/searchContact";
 
 	
 	public static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";

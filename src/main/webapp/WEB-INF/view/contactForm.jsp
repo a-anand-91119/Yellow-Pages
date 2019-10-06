@@ -111,7 +111,7 @@
 					
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
-							Create Contact
+							Save Contact
 						</button>
 					</div>
 				</form:form>

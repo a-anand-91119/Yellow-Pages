@@ -753,7 +753,7 @@ textarea.input100 + .shadow-input100 {
 
 div.scrollabletable {
     overflow:hidden;
-    width: 60%;
+    width: 100%;
     overflow-y: scroll;
     height: 500px;
 }

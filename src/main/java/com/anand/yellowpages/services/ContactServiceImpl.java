@@ -49,13 +49,18 @@ public class ContactServiceImpl extends BaseDAO implements ContactService{
 	@Override
 	public List<Contact> findUserContact(Long userId, String freeTextCriteria) {
 		String findUserContactQuery = "SELECT C_CONTACTID, C_USERID, C_NAME, C_PHONENUMBER, C_EMAILADDRESS, C_ADDRESS, C_REMARK"
-				+ " FROM CONTACT WHERE C_USERID = :C_USERID AND (C_NAME LIKE '%:freeTextCriteria%' OR C_PHONENUMBER LIKE '%:freeTextCriteria%' OR C_EMAILADDRESS LIKE '%:freeTextCriteria%' OR C_ADDRESS LIKE '%:freeTextCriteria%' OR C_REMARK LIKE '%:freeTextCriteria%')";
+				+ " FROM CONTACT WHERE C_USERID = :C_USERID AND (C_NAME LIKE '%"+freeTextCriteria+"%' OR C_PHONENUMBER LIKE '%"+freeTextCriteria+"%' OR C_EMAILADDRESS LIKE '%"+freeTextCriteria+"%' OR C_ADDRESS LIKE '%"+freeTextCriteria+"%' OR C_REMARK LIKE '%"+freeTextCriteria+"%')";
+		
 		
 		Map<String, Object> bindMap = new HashMap<>();
 		bindMap.put("C_USERID", userId);
-		bindMap.put("freeTextCriteria", freeTextCriteria);
 		
 		return getNamedParameterJdbcTemplate().query(findUserContactQuery, bindMap, new ContactRowMapper());
+	}
+
+	@Override
+	public Contact findContactById(Long contactId) {
+		return (Contact) contactDAOImpl.findById(contactId);
 	}
 
 }

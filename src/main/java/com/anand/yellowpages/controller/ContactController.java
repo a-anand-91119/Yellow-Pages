@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.anand.yellowpages.command.SearchCommand;
 import com.anand.yellowpages.domain.Contact;
 import com.anand.yellowpages.services.ContactService;
 import com.anand.yellowpages.utilities.Constants;
@@ -35,10 +36,17 @@ public class ContactController {
 	public String saveContact(@ModelAttribute("saveContactCommand") Contact contact, Model model, HttpSession httpSession) {
 		try {
 			contact.setContactUserId((Long) httpSession.getAttribute("loggedInUserId"));
-			contactService.saveContact(contact);
+			Long contactId = (Long) httpSession.getAttribute("contactId");
+			if(contactId != null) {
+				contact.setContactId(contactId);
+				contactService.updateContact(contact);
+				httpSession.removeAttribute("contactId");
+			}else {
+				contactService.saveContact(contact);
+			}
 			return "redirect:contactList?action=save";
 		} catch (Exception e) {
-			model.addAttribute("errorMessage", "Failed to Create Contact!");
+			model.addAttribute("errorMessage", "Failed to Save Contact!");
 			return "contactForm";
 		}
 	}
@@ -47,12 +55,28 @@ public class ContactController {
 	public String contactList(Model model, HttpSession httpSession) {
 		Long userId = (Long) httpSession.getAttribute("loggedInUserId");
 		model.addAttribute("contactList", contactService.findUserContact(userId));
+		model.addAttribute("searchCommand", new SearchCommand());
 		return "contactList";
 	}
 	
 	@RequestMapping(value = Constants.URL_CONTACT_DELETE)
-	public String contactList(@RequestParam("contactId") Long contactId) {
+	public String deleteContact(@RequestParam("contactId") Long contactId) {
 		contactService.deleteSingleContact(contactId);
 		return "redirect:contactList?action=delete";
+	}
+	
+	@RequestMapping(value = Constants.URL_CONTACT_EDIT)
+	public String editContact(@RequestParam("contactId") Long contactId, HttpSession httpSession, Model model) {
+		httpSession.setAttribute("contactId", contactId);
+		Contact contact = contactService.findContactById(contactId);
+		model.addAttribute("saveContactCommand", contact);
+		return "contactForm";
+	}
+	
+	@RequestMapping(value = Constants.URL_CONTACT_SEARCH)
+	public String searchContact(@ModelAttribute("searchCommand") SearchCommand searchCommand, Model model, HttpSession httpSession) {
+		Long userId = (Long) httpSession.getAttribute("loggedInUserId");
+		model.addAttribute("contactList", contactService.findUserContact(userId, searchCommand.getSearchText()));
+		return "contactList";
 	}
 }

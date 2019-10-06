@@ -9,6 +9,7 @@
 	<title>Yellow Pages - Contact List</title>
 	
 	<spring:url var = "urlImage" value ="/resources/images/img-01.png"/>
+	<spring:url var = "urlContactSearch" value ="/user/searchContact"/>
 	
 	<spring:url var = "urlFavicon" value ="/resources/images/icons/favicon.ico"/>
 	<spring:url var = "urlBootstrap" value ="/resources/vendor/bootstrap/css/bootstrap.min.css"/>
@@ -81,19 +82,42 @@
 						</script>
 			</spring:if>
 			<!-- BODY -->
+			
 				<span class="login100-form-title" style = "padding-bottom: 30px;">
 						All Contacts
 				</span>
+				
 				<div class="login100-pic js-tilt" data-tilt style = "width: 30%;">     
 					 <img src="${urlImage}" alt="IMG">
 				</div>
 				
+				
+				<div>
+				<form:form class="validate-form" action="${urlContactSearch}" style=" margin-bottom: 10px;" modelAttribute="searchCommand">
+				<div style= "margin: auto;">
+						<div class="wrap-input100 validate-input" data-validate = "Enter A Search Parameter To Search" style = "width: 70%; float: left;">
+								<form:input class="input100" type="text" name="text" placeholder="Enter Search Text" path="searchText"/>
+								<span class="focus-input100"></span>
+								<span class="symbol-input100">
+									<i class="fa fa-search" aria-hidden="true"></i>
+								</span>
+						</div>
+						<div class="container-login100-form-btn" style = "width: 25%; float: right;">
+							<button class="login100-form-btn">
+								Search
+							</button>
+						</div>
+				</div>
+					
+				</form:form>
 				<div class="scrollabletable">
+				
 					<spring:forEach items="${contactList}" var = "contact" varStatus = "contactData">
 						<%@ include file="cards/card.jsp"%>
-					<%-- 	<jsp:include page="cards/card.jsp"/> --%>
 					</spring:forEach>
 				</div>
+				</div>
+				
 				
 			<!-- BODY -->
 				

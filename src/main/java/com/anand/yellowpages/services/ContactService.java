@@ -65,4 +65,6 @@ public interface ContactService {
 	 * 			all user contacts satisfying the specified free text criteria
 	 */
 	public List<Contact> findUserContact(Long userId, String freeTextCriteria);
+	
+	public Contact findContactById(Long contactId);
 }
