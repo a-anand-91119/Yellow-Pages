@@ -24,11 +24,16 @@ public class Constants {
 	public static final String URL_CONTACT_LIST = "/user/contactList";
 	public static final String URL_CONTACT_EDIT = "/user/editContact";
 	public static final String URL_CONTACT_DELETE = "/user/deleteContact";
+	public static final String URL_CONTACT_DELETE_BULK = "/user/bulkDeleteContact";
 	public static final String URL_CONTACT_SEARCH = "/user/searchContact";
-
+	public static final String URL_USERS_LIST = "/admin/usersList";
+	public static final String URL_AJAX_TEST = "/ajaxTest";
+	public static final String URL_AJAX_TEST_TIME = "/ajaxTestTime";
+	public static final String URL_AJAX_LOGIN_STATUS = "/admin/changeUserLoginStatus";
+	public static final String URL_USERNAME_AVAILABLE = "/isUsernameAvailable";
 	
 	public static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
-	public static final String DB_URL = "jdbc:mysql://localhost:3306/yellow_pages";
+	public static final String DB_URL = "jdbc:mysql://localhost:3306/yellow_pages?serverTimezone=UTC";
 	public static final String DB_USERNAME = "root";
 	public static final String DB_PASSWORD = "";
 	public static final String COMMA = ",";

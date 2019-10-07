@@ -28,6 +28,9 @@
 	<spring:url var = "urlJqueryMin" value ="/resources/vendor/jquery/jquery-3.2.1.min.js"/>
 	<spring:url var = "urlSmartAlert" value ="/resources/vendor/sweetalert2/sweetalert2.all.min.js"/>
 	<spring:url var = "urlSmartAlertPolyfill" value ="https://cdn.jsdelivr.net/npm/promise-polyfill"/>
+	<spring:url var = "urlJQuery" value ="/resources/js/jquery-3.4.1.min.js"/>
+	
+	<script src="${urlJQuery}"></script>
 	
 	<link rel="icon" type="image/png" href="${urlFavicon}"/>
 	<link rel="stylesheet" type="text/css" href="${urlBootstrap}">
@@ -40,6 +43,20 @@
 	
 	<script src="${urlSmartAlert}"></script>
 	<script src="${urlSmartAlertPolyfill}"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+			$("#checkUserNameAvailability").click(function(){
+					$.ajax({
+							url: 'isUsernameAvailable',
+							data: {username: $("#usernameField").val()},
+							success: function(data){
+								alert(data);
+								}
+						});
+				});
+		});
+	</script>
 </head>
 <body>
 	<div class="limiter">
@@ -69,14 +86,17 @@
 						</script>
 					</spring:if>
 					
-					<div class="wrap-input100 validate-input" data-validate = "Login Username is required">
-						<form:input class="input100" type="text" name="text" placeholder="Username" path="user.userLoginName"/>
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-user" aria-hidden="true"></i>
-						</span>
-					</div>
-
+					<!-- <div style = "margin:auto;"> -->
+						<div class="wrap-input100 validate-input" data-validate = "Login Username is required" >
+							<form:input id = "usernameField" class="input100" type="text" name="text" placeholder="Username" path="user.userLoginName"/>
+							<span class="focus-input100"></span>
+							<span class="symbol-input100">
+								<i class="fa fa-user" aria-hidden="true"></i>
+							</span>
+						</div>
+						
+					<!-- </div> -->
+					
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
 						<form:password class="input100" name="pass" placeholder="Password" path="user.userPassword"/>
 						<span class="focus-input100"></span>
@@ -117,10 +137,19 @@
 						</span>
 					</div>
 					
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Submit
-						</button>
+					<div style = "margin : auto;">
+						<div class="container-login100-form-btn" style="float: left; width: 45%;">
+							<button class="login100-form-btn">
+								Submit
+							</button>
+						</div>
+						
+						<div style="float: left; width: 50%; margin-left: 5px;">
+							<button class="login100-form-btn" id="checkUserNameAvailability" type="button">
+									Check Available
+							</button>
+						</div>
+				
 					</div>
 				</form:form>
 				

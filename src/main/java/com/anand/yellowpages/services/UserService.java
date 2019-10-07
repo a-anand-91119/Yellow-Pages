@@ -53,4 +53,13 @@ public interface UserService {
 	 * 			new login status of the user
 	 */
 	public void changeLoginStatus(Long userId, Integer loginStatus);
+	
+	/**
+	 * Checks whether the entered username is available or not
+	 * 
+	 * @param username
+	 * 			the username to be checked
+	 * @return true if username is not available, otherwise returns false
+	 */
+	public boolean isUsernameAvailable(String username);
 }

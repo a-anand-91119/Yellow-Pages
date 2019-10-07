@@ -10,6 +10,7 @@
 <spring:url var = "urlUserContactList" value ="/user/contactList"/>
 
 <spring:url var = "urlAdminHome" value ="/admin/dashboard"/>
+<spring:url var = "urlAdminUsersList" value ="/admin/usersList"/>
 
 <spring:if test="${sessionScope.loggedInUserId==null}">
 	<!-- User Not Yet Logged In : Guest Menu-->
@@ -29,7 +30,7 @@
 	<div class="wrap-logintest">
 		<div class="menubar topBotomBordersIn">
 		  <a href = "${urlAdminHome}" >HOME</a>
-		  <a href = "#" >USER LIST</a>
+		  <a href = "${urlAdminUsersList}" >USER LIST</a>
 		  <a href = "${urlLogout}" >LOGOUT</a>
 		</div>
 	</div>

@@ -1,5 +1,7 @@
 package com.anand.yellowpages.controller;
 
+import java.util.Arrays;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +80,11 @@ public class ContactController {
 		Long userId = (Long) httpSession.getAttribute("loggedInUserId");
 		model.addAttribute("contactList", contactService.findUserContact(userId, searchCommand.getSearchText()));
 		return "contactList";
+	}
+	
+	@RequestMapping(value = Constants.URL_CONTACT_DELETE_BULK)
+	public String deleteBulkContact(@RequestParam("contactId") Long[] contactIds) {
+		contactService.deleteMultipleContacts(contactIds);
+		return "redirect:contactList?action=delete";
 	}
 }

@@ -1,6 +1,7 @@
 package com.anand.yellowpages.services;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import com.anand.yellowpages.exception.UserBlockedException;
 import com.anand.yellowpages.rowmappers.UserRowMapper;
 import com.anand.yellowpages.utilities.ServiceConstants;
 
+@SuppressWarnings("unchecked")
 @Service
 public class UserServiceImpl extends BaseDAO implements UserService{
 
@@ -52,13 +54,20 @@ public class UserServiceImpl extends BaseDAO implements UserService{
 
 	@Override
 	public List<User> getAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<User>) userDAOImpl.findByProperty("U_ROLE", ServiceConstants.ROLE_USER);
 	}
 
 	@Override
 	public void changeLoginStatus(Long userId, Integer loginStatus) {
-		// TODO Auto-generated method stub	
+		String updateQuery = "UPDATE USERS SET U_LOGINSTATUS = ? where U_USERID = ?";
+		getJdbcTemplate().update(updateQuery, loginStatus, userId);
+	}
+
+	@Override
+	public boolean isUsernameAvailable(String username) {
+		String checkQuery = "SELECT COUNT(U_LOGINNAME) FROM USERS WHERE U_LOGINNAME = ?";
+		Integer count = getJdbcTemplate().queryForObject(checkQuery, new String[] {username}, Integer.class);
+		return count == 0;
 	}
 
 }

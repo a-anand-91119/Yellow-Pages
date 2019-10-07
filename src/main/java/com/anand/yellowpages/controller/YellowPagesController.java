@@ -1,5 +1,7 @@
 package com.anand.yellowpages.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.anand.yellowpages.command.LoginCommand;
 import com.anand.yellowpages.command.RegistrationCommand;
+import com.anand.yellowpages.command.SearchCommand;
 import com.anand.yellowpages.domain.User;
 import com.anand.yellowpages.exception.UserBlockedException;
 import com.anand.yellowpages.services.UserService;
@@ -38,6 +43,13 @@ public class YellowPagesController {
 	@RequestMapping(value = {Constants.URL_DASHBOARD_ADMIN})
 	public String adminDashboard() {
 		return "dashboard_admin";  // -> /WEB-INF/view/dashboard_admin.jsp
+	}
+	
+	@RequestMapping(value = {Constants.URL_USERS_LIST})
+	public String getUsersList(Model model) {
+		model.addAttribute("usersList", userService.getAllUsers()); 
+		model.addAttribute("searchCommand", new SearchCommand());
+		return "users_list";  // -> /WEB-INF/view/users_list.jsp
 	}
 	
 	@RequestMapping(value = {Constants.URL_LOGOUT})
@@ -109,5 +121,42 @@ public class YellowPagesController {
 	private void addUserToSession(User user, HttpSession httpSession) {
 		httpSession.setAttribute("loggedInUserId", user.getUserId());
 		httpSession.setAttribute("loggedInUserRole", user.getUserRole());
+	}
+	
+	@RequestMapping(value = Constants.URL_AJAX_TEST)
+	public String ajaxTest() {
+		return "ajax_test"; // -> /WEB-INF/view/ajax_test.jsp
+	}
+	
+	@RequestMapping(value = Constants.URL_AJAX_TEST_TIME)
+	@ResponseBody
+	public String getTimeByAjax() {
+		Date date = new Date();
+		return date.toString();
+	}
+	
+	@RequestMapping(value = Constants.URL_AJAX_LOGIN_STATUS)
+	@ResponseBody
+	public String updateUserLoginStatusByAjax(@RequestParam Long userId, @RequestParam Integer loginStatus) {
+		System.out.println(userId +""+ loginStatus);
+		try {
+			userService.changeLoginStatus(userId, loginStatus);
+			return "SUCCESS: User Login Status Changed";
+		} catch (Exception e) {
+			return "FAILURE: Error: " + e.getMessage();
+		}
+	}
+	
+	@RequestMapping(value = Constants.URL_USERNAME_AVAILABLE)
+	@ResponseBody
+	public String isUserNameAvailable(@RequestParam("username") String userNameToCheck) {
+		try {
+			if(userService.isUsernameAvailable(userNameToCheck))
+				return "SUCCESS: Username Is Available";
+			else
+				return "FAILURE: Username Is Already Taken";
+		} catch (Exception e) {
+			return "FAILURE: Error: " + e.getMessage();
+		}
 	}
 }

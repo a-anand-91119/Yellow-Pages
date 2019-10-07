@@ -98,10 +98,9 @@ public class ContactDAOImpl extends BaseDAO implements DAO{
 
 	@Override
 	public void deleteMultiple(Object[] ids) {
-		String deleteQuery = "DELETE FROM CONTACT WHERE C_CONTACTID IN (?)";
 		String concatenatedIds = StringUtils.toConcatenatedString(ids, Constants.COMMA);
-		
-		getJdbcTemplate().update(deleteQuery, concatenatedIds);
+		String deleteQuery = "DELETE FROM CONTACT WHERE C_CONTACTID IN (" + concatenatedIds + ")";
+		getJdbcTemplate().update(deleteQuery);
 	}
 
 }

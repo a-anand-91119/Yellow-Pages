@@ -10,6 +10,7 @@
 	
 	<spring:url var = "urlImage" value ="/resources/images/img-01.png"/>
 	<spring:url var = "urlContactSearch" value ="/user/searchContact"/>
+	<spring:url var = "urlBulkDeleteContact" value ="/user/bulkDeleteContact"/>
 	
 	<spring:url var = "urlFavicon" value ="/resources/images/icons/favicon.ico"/>
 	<spring:url var = "urlBootstrap" value ="/resources/vendor/bootstrap/css/bootstrap.min.css"/>
@@ -52,9 +53,9 @@
 						<script>
 						Swal.fire({
 							  type: 'success',
-							  title: 'Contact Created Successfully!',
+							  title: 'Contact Saved Successfully!',
 							  showConfirmButton: true,
-							  footer: 'You Can See The New Contact In Contact List'
+							  footer: 'You Can See All Your Contacts In Contact List'
 							})
 						</script>
 			</spring:if>
@@ -87,34 +88,43 @@
 						All Contacts
 				</span>
 				
-				<div class="login100-pic js-tilt" data-tilt style = "width: 30%;">     
+				<div class="login100-pic js-tilt" data-tilt style = "width: 35%; float: left;">     
 					 <img src="${urlImage}" alt="IMG">
-				</div>
+				</div> 
 				
 				
-				<div>
+				<div style = "width: 65%;" >
+				
 				<form:form class="validate-form" action="${urlContactSearch}" style=" margin-bottom: 10px;" modelAttribute="searchCommand">
-				<div style= "margin: auto;">
-						<div class="wrap-input100 validate-input" data-validate = "Enter A Search Parameter To Search" style = "width: 70%; float: left;">
-								<form:input class="input100" type="text" name="text" placeholder="Enter Search Text" path="searchText"/>
-								<span class="focus-input100"></span>
-								<span class="symbol-input100">
-									<i class="fa fa-search" aria-hidden="true"></i>
-								</span>
+					<div style= "margin: auto;">
+						<div style = "width: 63%; float: left; margin: auto;">
+							<div class="wrap-input100 validate-input" data-validate = "Enter A Search Parameter To Search" style = "width: 70%; float: left;">
+									<form:input class="input100" type="text" name="text" placeholder="Enter Search Text" path="searchText"/>
+									<span class="focus-input100"></span>
+									<span class="symbol-input100">
+										<i class="fa fa-search" aria-hidden="true"></i>
+									</span>
+							</div>
+							<div class="container-login100-form-btn" style = "width: 30%; float: right;">
+								<button class="login100-form-btn" style="margin-left: 5px;">
+									Search
+								</button>
+							</div>
 						</div>
-						<div class="container-login100-form-btn" style = "width: 25%; float: right;">
-							<button class="login100-form-btn">
-								Search
-							</button>
+						<div class="container-login100-form-btn" style = "width: 35%; float: right;">
+								<button class="login100-form-btn2" form="deleteForm">
+									Delete Selected Contacts
+								</button>
 						</div>
-				</div>
-					
+					</div>
 				</form:form>
-				<div class="scrollabletable">
 				
-					<spring:forEach items="${contactList}" var = "contact" varStatus = "contactData">
-						<%@ include file="cards/card.jsp"%>
-					</spring:forEach>
+				<div class="scrollabletable">
+					<form id="deleteForm" action="${urlBulkDeleteContact}">
+						<spring:forEach items="${contactList}" var = "contact" varStatus = "contactData">
+							<%@ include file="cards/card.jsp"%>
+						</spring:forEach>
+					</form>
 				</div>
 				</div>
 				

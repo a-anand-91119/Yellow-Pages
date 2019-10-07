@@ -93,6 +93,12 @@
             <i class="fa fa-trash"></i> 
             <div class="title"><a href="${urlDeleteContact}" id="link">Delete</a></div>
           </div>
+          <div>
+          	<label class="pure-material-checkbox">
+			  <input type="checkbox" name = "contactId" value = "${contact.contactId}">
+			  <span>Select</span>
+			</label>
+          </div>
         </div>
       </div>
     </div>

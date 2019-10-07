@@ -75,6 +75,11 @@
 	    <artifactId>commons-dbcp</artifactId>
 	    <version>1.4</version>
 	</dependency>
+	<dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-util-scan</artifactId>
+        <version>9.0.26</version>
+    </dependency>
   </dependencies>
 
   <build>
